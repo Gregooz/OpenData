@@ -1,5 +1,6 @@
 from mysql.connector import (connection)
 from mysql.connector import errorcode
+import csv
 
 class BD:
 
@@ -10,7 +11,7 @@ class BD:
 	##         Connexion à la base de données             ##
 	########################################################
 	def connexion(self):
-		self.cnx = connection.MySQLConnection(user='E146103H', password='E146103H', host='infoweb', database='E146103H')
+		self.cnx = connection.MySQLConnection(user='E146294Q', password='E146294Q', host='infoweb', database='E146294Q')
 		self.cursor = self.cnx.cursor()
 
 	########################################################
@@ -78,6 +79,20 @@ class BD:
 		# except:
 		# 	print("Les Tables sont déja crée")
 
+	
+	def insertionDonnees(self):
+		cr = csv.reader(open("../data/installations.csv"))
+		compteur = 0
+		for row in cr:
+			if (compteur != 0):
+				self.cursor.execute("INSERT INTO `installation` VALUES ("+row[1]+", '"+row[0].replace("'", " ")+"', '"+row[7].replace("'", " ")+"', "+row[4]+", '"+row[2].replace("'", " ")+"', "+row[9]+", "+row[10]+")" )
+				self.cnx.commit()
+				compteur = compteur +1
+			else:
+				compteur = compteur+1
+
+
+
 
 	def deconnexion(self):
 		self.cnx.close()
@@ -86,6 +101,7 @@ class BD:
 bd = BD()
 bd.connexion()
 bd.creationTables()
+bd.insertionDonnees()
 bd.deconnexion()
 
 
