@@ -11,7 +11,7 @@ class BD:
 	##         Connexion à la base de données             ##
 	########################################################
 	def connexion(self):
-		self.cnx = connection.MySQLConnection(user='E146294Q', password='E146294Q', host='infoweb', database='E146294Q')
+		self.cnx = connection.MySQLConnection(user='root', password='', host='localhost', database='prod')
 		self.cursor = self.cnx.cursor()
 
 	########################################################
@@ -23,11 +23,11 @@ class BD:
     	"CREATE TABLE `installation` ("
     	"	`id` int(10) NOT NULL,"
     	"   `nom` varchar(255) NOT NULL,"
-    	"   `adresse` varchar(255) NOT NULL,"
-    	"   `code_postal` int(5) NOT NULL,"
+    	"   `adresse` varchar(255),"
+    	"   `code_postal` int(5),"
     	"   `ville` varchar(255) NOT NULL,"
-    	"   `latitude` float(15) NOT NULL,"
-    	"   `longitude` float(15) NOT NULL,"
+    	"   `latitude` float(25) NOT NULL,"
+    	"   `longitude` float(25) NOT NULL,"
     	"   PRIMARY KEY (`id`)"
     	") ")
 
@@ -52,7 +52,7 @@ class BD:
 		    "CREATE TABLE `activite` ("
 		    "  `id` int(10) NOT NULL,"
 		    "  `nom` varchar(255) NOT NULL,"
-		    "  PRIMARY KEY (`id`)"
+		    "	KEY (`id`)"
 		    ") ")
 
 		########################################################
@@ -62,7 +62,6 @@ class BD:
 			"CREATE TABLE `equipement_activite` ("
 			"  `id_equipement` int(10) NOT NULL,"
 			"  `id_activite` int(10) NOT NULL,"
-			"	PRIMARY KEY (`id_equipement`, `id_activite`),"
 			"	KEY `id_equipement` (`id_equipement`),"
 			"	KEY `id_activite` (`id_activite`),"
 			"	CONSTRAINT `fk_equipement` FOREIGN KEY (`id_equipement`)"
@@ -80,16 +79,66 @@ class BD:
 		# 	print("Les Tables sont déja crée")
 
 	
-	def insertionDonnees(self):
-		cr = csv.reader(open("../data/installations.csv"))
+	def insertionDonneesInstallation(self):
+		cr = csv.reader(open("../data/installations.csv",  encoding='utf-8'))
 		compteur = 0
 		for row in cr:
 			if (compteur != 0):
-				self.cursor.execute("INSERT INTO `installation` VALUES ("+row[1]+", '"+row[0].replace("'", " ")+"', '"+row[7].replace("'", " ")+"', "+row[4]+", '"+row[2].replace("'", " ")+"', "+row[9]+", "+row[10]+")" )
+				tmp = row[0].replace("'", "''")
+				if(row[4] == ""):
+					row[4]="00000"
+				self.cursor.execute("INSERT INTO `installation` VALUES ("+row[1]+", '"+tmp+"', '"+row[7].replace("'", "''")+"', "+row[4]+", '"+row[2].replace("'", "''")+"', "+row[9]+", "+row[10]+")" )
 				self.cnx.commit()
 				compteur = compteur +1
+				print(compteur)
 			else:
 				compteur = compteur+1
+		print("Fin")
+
+	def insertionDonneesEquipenement(self):
+		cr = csv.reader(open("../data/equipements.csv",  encoding='utf-8'))
+		compteur = 0
+		for row in cr:
+			if (compteur != 0):
+				self.cursor.execute("INSERT INTO `equipement` VALUES ("+row[4]+", '"+row[3].replace("'", " ")+"', "+row[2]+")" )
+				self.cnx.commit()
+				compteur = compteur +1
+				print(compteur)
+			else:
+				compteur = compteur+1
+		print("Fin")
+
+	def insertionDonneesActivite(self):
+		cr = csv.reader(open("../data/activites.csv",  encoding='utf-8'))
+		compteur = 0
+		for row in cr:
+			if (compteur != 0):
+				if(row[4] == ""):
+					row[4] = "0"
+				if(row[5] == ""):
+					row[5] = "none"
+				self.cursor.execute("INSERT INTO `activite` VALUES ("+row[4]+", '"+row[5].replace("'", " ")+"' )" )
+				self.cnx.commit()
+				compteur = compteur +1
+				print(compteur)
+			else:
+				compteur = compteur+1
+		print("Fin")
+
+	def insertionDonneesActiviteEquipement(self):
+		cr = csv.reader(open("../data/activites.csv",  encoding='utf-8'))
+		compteur = 0
+		for row in cr:
+			if (compteur != 0):
+				if(row[4] == ""):
+					row[4] = "0";
+				self.cursor.execute("INSERT INTO `equipement_activite` VALUES ("+row[2]+", "+row[4]+" )" )
+				self.cnx.commit()
+				compteur = compteur +1
+				print(compteur)
+			else:
+				compteur = compteur+1
+		print("Fin")
 
 
 
@@ -100,8 +149,11 @@ class BD:
 
 bd = BD()
 bd.connexion()
-bd.creationTables()
-bd.insertionDonnees()
+#bd.creationTables()
+#bd.insertionDonneesInstallation()
+bd.insertionDonneesEquipenement()
+#bd.insertionDonneesActivite()
+bd.insertionDonneesActiviteEquipement()
 bd.deconnexion()
 
 
