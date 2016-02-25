@@ -7,7 +7,8 @@ class vueInstallation{
 
 
 	function generer1Installation($installation){
-		return $htlm = "<div class=login> <div class=login-screen>
+		return $htlm = "<title>Installations de ".$installation->getVille()."</title>
+						<div class=login> <div class=login-screen>
 						<div class=app-title>
 						<h1 style=font-size:50px>".$installation->getNom()."</h1>
 						</div>
@@ -59,7 +60,7 @@ class vueInstallation{
 
 	function genererEnTetes(){
 		return "<link rel=stylesheet href=vue/style.css>
-				<meta http-equiv=content-type content=text/html; charset=utf-8 />";
+				<meta http-equiv=content-type content=text/html charset=utf-8 />";
 
 	}
 
