@@ -11,7 +11,7 @@ class BD:
 	##         Connexion à la base de données             ##
 	########################################################
 	def connexion(self):
-		self.cnx = connection.MySQLConnection(user='root', password='', host='localhost', database='prod')
+		self.cnx = connection.MySQLConnection(user='E146294Q', password='E146294Q', host='infoweb', database='E146294Q')
 		self.cursor = self.cnx.cursor()
 
 	########################################################
@@ -78,7 +78,9 @@ class BD:
 		# except:
 		# 	print("Les Tables sont déja crée")
 
-	
+	########################################################
+	##         Insertion des données Installation         ##
+	########################################################	
 	def insertionDonneesInstallation(self):
 		cr = csv.reader(open("../data/installations.csv",  encoding='utf-8'))
 		compteur = 0
@@ -95,6 +97,9 @@ class BD:
 				compteur = compteur+1
 		print("Fin")
 
+	########################################################
+	##         Insertion des données Equipement           ##
+	########################################################
 	def insertionDonneesEquipenement(self):
 		cr = csv.reader(open("../data/equipements.csv",  encoding='utf-8'))
 		compteur = 0
@@ -108,6 +113,9 @@ class BD:
 				compteur = compteur+1
 		print("Fin")
 
+	########################################################
+	##           Insertion des données Activité           ##
+	########################################################
 	def insertionDonneesActivite(self):
 		cr = csv.reader(open("../data/activites.csv",  encoding='utf-8'))
 		compteur = 0
@@ -125,6 +133,9 @@ class BD:
 				compteur = compteur+1
 		print("Fin")
 
+	########################################################
+	##       Ajout dans la table Activité-Equipement      ##
+	########################################################
 	def insertionDonneesActiviteEquipement(self):
 		cr = csv.reader(open("../data/activites.csv",  encoding='utf-8'))
 		compteur = 0
@@ -142,18 +153,26 @@ class BD:
 
 
 
-
+	########################################################
+	##                Déconnexion de la base              ##
+	########################################################
 	def deconnexion(self):
 		self.cnx.close()
 
 
+
+
+########################################################
+##    Utilisation des méthodes pour créer la base	  ##
+##			    et ajouter les données                ##
+########################################################
 bd = BD()
 bd.connexion()
-#bd.creationTables()
-#bd.insertionDonneesInstallation()
+bd.creationTables()
+bd.insertionDonneesInstallation()
 bd.insertionDonneesEquipenement()
-#bd.insertionDonneesActivite()
+bd.insertionDonneesActivite()
 bd.insertionDonneesActiviteEquipement()
 bd.deconnexion()
-
+########################################################
 
