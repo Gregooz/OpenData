@@ -104,7 +104,7 @@ class BD:
 		cr = csv.reader(open("../data/equipements.csv",  encoding='utf-8'))
 		compteur = 0
 		for row in cr:
-			if (compteur != 0):
+			if (compteur != 0 and self.verifierEquipement(row[2]) ):
 				self.cursor.execute("INSERT INTO `equipement` VALUES ("+row[4]+", '"+row[3].replace("'", " ")+"', "+row[2]+")" )
 				self.cnx.commit()
 				compteur = compteur +1
@@ -113,6 +113,13 @@ class BD:
 				compteur = compteur+1
 		print("Fin")
 
+	def verifierEquipement(self, id_equipement):
+		self.cursor.execute("select * from equipement where id_installation = "+id_equipement+"")
+		if(len(self.cursor.fetchall()) == 0):
+			return True
+		else:
+			return False
+
 	########################################################
 	##           Insertion des données Activité           ##
 	########################################################
@@ -120,7 +127,7 @@ class BD:
 		cr = csv.reader(open("../data/activites.csv",  encoding='utf-8'))
 		compteur = 0
 		for row in cr:
-			if (compteur != 0):
+			if (compteur != 0 and self.verifierActivite(row[4])):
 				if(row[4] == ""):
 					row[4] = "0"
 				if(row[5] == ""):
@@ -133,6 +140,15 @@ class BD:
 				compteur = compteur+1
 		print("Fin")
 
+	def verifierActivite(self, id_activite):
+		print(id_activite)
+		self.cursor.execute("select * from activite where id = "+id_activite+"")
+		if(len(self.cursor.fetchall()) == 0):
+			return True
+		else:
+			return False
+
+
 	########################################################
 	##       Ajout dans la table Activité-Equipement      ##
 	########################################################
@@ -140,7 +156,7 @@ class BD:
 		cr = csv.reader(open("../data/activites.csv",  encoding='utf-8'))
 		compteur = 0
 		for row in cr:
-			if (compteur != 0):
+			if (compteur != 0 and self.verifierEquipementBis(row[2], row[4]) ):
 				if(row[4] == ""):
 					row[4] = "0";
 				self.cursor.execute("INSERT INTO `equipement_activite` VALUES ("+row[2]+", "+row[4]+" )" )
@@ -151,6 +167,12 @@ class BD:
 				compteur = compteur+1
 		print("Fin")
 
+	def verifierEquipementBis(self, id_equipement, id_activite):
+		self.cursor.execute("select * from equipement_activite where id_equipement = "+id_equipement+" and id_activite = "+id_activite+"")
+		if(len(self.cursor.fetchall()) == 0):
+			return True
+		else:
+			return False
 
 
 	########################################################
@@ -168,9 +190,9 @@ class BD:
 ########################################################
 bd = BD()
 bd.connexion()
-bd.creationTables()
-bd.insertionDonneesInstallation()
-bd.insertionDonneesEquipenement()
+#bd.creationTables()
+#bd.insertionDonneesInstallation()
+#bd.insertionDonneesEquipenement()
 bd.insertionDonneesActivite()
 bd.insertionDonneesActiviteEquipement()
 bd.deconnexion()
