@@ -1,32 +1,48 @@
 <html>
 	<head>
-		<link rel=stylesheet href="static/style.css">
+		<!-- Compiled and minified CSS -->
+  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+  		<!--Import jQuery before materialize.js-->
+      	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<!-- Compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+		<!--Import Google Icon Font-->
+      	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">          
 		<meta charset="utf8">
 	</head>
-	<body>
-		<div class=login>
-			<div class=login-screen>
-				<div class=app-title>
-					<h1 style=font-size:50px>Faire une recherche</h1>
+	<body class="teal lighten-2">
+		<div class="container teal lighten-5 valign" style="margin-top: 10em; border-radius: 10px;">
+			<div class="container">
+				<div class="row">
+					<div class="col s12">
+						<h1 class="center-align grey-text text-darken-2">Faire une recherche</h1>
+					</div>
 				</div>
-				<div class=login-form >
-					<form method='GET' action="/ville">
-						<table>
-							<tr>
-								<td class="acceuil">Rechercher une ville: </td>
-								<td class="acceuil"><input type=text class=imput placeholder='Ex : Nantes' name="recherche" /></td>
-							</tr>
-							<tr>
-								<td class="acceuil">Rechercher une activité: </td>
-								<td class="acceuil"><input type=text class=imput placeholder='Ex : Handball' name="activité" /></td>
-							</tr>
-							
-							<tr>
-								<td colspan="2"><input class='btn2 btn-primary btn2-large btn2-block' type=submit value="Rechercher"/></td>
-							</tr>
-						</table>
-					</form>
-				</div>
+				<div class="row">
+					<form class="col s12" action="#" method="GET">
+						<div class="row">
+							<div class="input-field col s12">
+								<i class="material-icons prefix grey-text text-darken-2">location_on</i>
+								<input id="ville" type="text" name="recherche">
+	          					<label for="ville">Rechercher une ville</label>
+	          				</div>
+	          			</div>
+	          			<div class="row">
+							<div class="input-field col s12">
+								<i class="material-icons prefix grey-text text-darken-2">games</i>
+								<input id="activite" type="text" name="activite">
+	          					<label for="activite">Rechercher une activité</label>
+	          				</div>
+	          			</div>
+	          			<div class="row">
+							<div class="col s12 center-align">
+								<button class="btn-large waves-effect waves-light" type="submit" name="action">Rechercher
+									<i class="material-icons right">send</i>
+								</button>        
+	          				</div>
+	          			</div>
+	          		</form>
+	          	</div>
 			</div>
 		</div>
 	</body>
