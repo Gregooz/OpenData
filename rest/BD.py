@@ -10,6 +10,7 @@ class BD:
 	def connexion(self):
 		self.cnx = connection.MySQLConnection(user='E146294Q', password='E146294Q', host='infoweb', database='E146294Q')
 		self.cursor = self.cnx.cursor()
+		return self.cnx
 
 
 	def getInstallations(self, get_ville):
@@ -67,7 +68,8 @@ class BD:
 		return str(self.cursor.fetchone())
 
 						
-						
+	def getCursor(self):
+		return self.cursor 				
 						
 
 
