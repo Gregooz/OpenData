@@ -1,8 +1,7 @@
 $( document ).ready(function() {
 
 
-
-console.log(decodeURI(getParameter('ville')));
+//Requête JSON avec Ajax pour questionner notre REST service
 
     $.ajax({
         url:'http://localhost:8080/getInstallations',
@@ -12,6 +11,7 @@ console.log(decodeURI(getParameter('ville')));
             data = $.parseJSON(data);
             $("#principal").html('');
             $.each(data, function(i,item){
+                //On ajoute nos résultats à la page HTML pour les afficher 
                 $("#principal").append(creation(item[1], item[2], item[5], item[6], item[0]));
                 if ( i == 10 ){
                 return false ;
@@ -24,7 +24,7 @@ console.log(decodeURI(getParameter('ville')));
 
 });
 
-
+//Fonction qui créer l'élement d'une installation à afficher
 function creation(nom, addr, lat, longi, id)
 {
     tmp = '<div class="container teal lighten-5" style="border-radius: 10px;"><div class="row"><div class="col s12 center grey-text text-darken-2"><h1>Title</h1>';
@@ -36,6 +36,7 @@ function creation(nom, addr, lat, longi, id)
     return tmp;
 }
 
+//Fonction qui permet de récupèrer les paramètre souhaité
 function getParameter(theParameter) { 
   var params = window.location.search.substr(1).split('&');
  

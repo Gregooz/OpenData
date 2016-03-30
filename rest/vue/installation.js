@@ -46,7 +46,8 @@ $.ajax({
 
 
 
-
+//Fonction qui initialise la google map pour bonne positions
+//Longitude et latitude récupéré avec la requête JSON
 function initialize(lon, lat, titre) {
   var myLatlng = new google.maps.LatLng(lat,lon);
     var mapOptions = { zoom: 18, 
