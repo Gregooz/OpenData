@@ -1,4 +1,4 @@
-from Admin.BD import *
+from Admin.BD import * #Import la class BD
 
 
 
@@ -8,21 +8,21 @@ from Admin.BD import *
 ########################################################
 
 #Connexion à la base de données
-bd = BD()
-bd.connexion()
+bd = BD() 		#On construit un objet BD 
+bd.connexion()	#On fait la connexion avec la base de donnée
 
 #Création des Tables
-creationTableInstallation(bd.cursor)
-creationTableEquipement(bd.cursor)
-creationTableActivite(bd.cursor)
-creationTableEquipementActivite(bd.cursor)
+creationTableInstallation(bd.cursor) 		#Table Installation
+creationTableEquipement(bd.cursor) 			#Table Equipement
+creationTableActivite(bd.cursor) 			#Table Activité
+creationTableEquipementActivite(bd.cursor) 	#Table EquipementActivité
 
 #Insertions des données dans la base
-bd.insertionDonneesInstallation()
-bd.insertionDonneesEquipenement()
-bd.insertionDonneesActivite()
-bd.insertionDonneesActiviteEquipement()
+bd.insertionDonneesInstallation() 		#Insertion des données Installation
+bd.insertionDonneesEquipenement()		#Insertion des données Equipement
+bd.insertionDonneesActivite()			#Insertion des données Activités
+bd.insertionDonneesActiviteEquipement()	#Insertion des données Activités et équipement
 
 #Déconnexion de la base 
-bd.deconnexion()
+bd.deconnexion() #Déconnexion de la base
 ########################################################
